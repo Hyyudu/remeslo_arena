@@ -13,7 +13,16 @@ class Foe(Coded):
     name: str
     traits: List[FoeTrait]
     skills: List[foe_skill.FoeSkill]
-    hits: int
+    _hits: int
+
+    @property
+    def hits(self):
+        return self.hits
+
+    @hits.setter
+    def hits(self, value):
+        self._hits = max(0, value)
+
     attack: int
     to_hit: int
     damage: int
