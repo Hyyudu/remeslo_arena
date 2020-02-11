@@ -18,4 +18,10 @@ def plural(x: int, v1: str, v2: str, v5: str) -> str:
     return f"{x} {v5}"
 
 
+def bound(value, minval, maxval):
+    value = max(minval, value)
+    value = min(maxval, value)
+    return value
+
+
 plural_dice = partial(plural, v1='кубик', v2="кубика", v5="кубиков")

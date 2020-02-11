@@ -17,7 +17,7 @@ class Witcher(Coded):
     toxic: int
     signs: int
     alchemy: int
-    items: List[Item]
+    items: List[Item] = []
     skills: List[Listener] = []
 
     @property
@@ -56,6 +56,3 @@ class Ferret(Witcher):
     toxic = 5
     signs = 2
     alchemy = 3
-    items = [
-        SteelWitcherSword1(),
-    ]

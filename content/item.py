@@ -1,8 +1,9 @@
-from typing import Dict, List
+from typing import List
 
 from content.coded import Coded
+from content import item_functions as item_funcs
 from enums.combat_phase import CombatPhase
-from models.listener import Listener
+from models.listener import Listener, assign_listeners
 
 
 class Item(Coded):
@@ -10,16 +11,40 @@ class Item(Coded):
     listeners: List[Listener]
 
     def __init__(self):
-        for listener in self.listeners:
-            listener.source = self
+        assign_listeners(self, self.listeners)
+
+
+def LsrAttackBonus(modifier):
+    return Listener(
+        description=f"Удар +{modifier}",
+        phase=CombatPhase.attack_collect_dice,
+        func=item_funcs.flat_bonus(modifier),
+    )
+
+
+def LsrBlockBonus(modifier):
+    return Listener(
+        description=f"Блок +{modifier}",
+        phase=CombatPhase.block_collect_dice,
+        func=item_funcs.flat_bonus(modifier),
+    )
 
 
 class SteelWitcherSword1(Item):
     name = 'Стальной меч ведьмака'
     listeners = [
+        LsrAttackBonus(4),
+    ]
+
+class LightSilverSword3(Item):
+    name = 'Легкий серебряный меч'
+    listeners = [
+        LsrAttackBonus(2),
+        LsrBlockBonus(1),
         Listener(
-            description="+4 к Удару",
-            phase=CombatPhase.attack_collect_dice,
-            func=lambda x: x+4,
+            description='После броска Удара добавляет +1 к кубику с наименьшим значением',
+            phase=CombatPhase.attack_modify_roll,
+            func=item_funcs.diceroll_modify_least({0: 1}),
         )
     ]
+

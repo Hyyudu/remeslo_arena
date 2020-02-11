@@ -6,6 +6,7 @@ from enums.areal import Areal
 from enums.attr import Attr
 from content.coded import Coded
 from enums.foe_trait import FoeTrait
+from models.listener import assign_listeners
 
 
 class Foe(Coded):
@@ -28,6 +29,10 @@ class Foe(Coded):
     damage: int
     evade: Check
     block: Check
+
+    def __init__(self):
+        for skill in self.skills:
+            assign_listeners(self, skill.listeners)
 
 
 class Drowner(Foe):
