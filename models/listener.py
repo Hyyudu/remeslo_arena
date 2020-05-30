@@ -20,18 +20,18 @@ class Listener:
         return f"{self.source.name}: {self.description}"
 
 
-
 def assign_listeners(obj, listeners: List[Listener]):
     for listener in listeners:
         listener.source = obj
 
 
 def apply_listeners(func):
-    def wrapper(combat):
-        result = func(combat)
-        for listener in combat.listeners.get(getattr(CombatPhase, func.__name__), []):
-            if listener.is_applicable(result, combat):
+    def wrapper(obj):
+        result = func(obj)
+        listeners_source: List[Listener] = obj.listeners.get(func.__name__)
+        for listener in listeners_source:
+            if listener.is_applicable(result, obj):
                 print(listener.present)
-                result = listener.func(result, combat)
+                result = listener.func(result, obj)
         return result
     return wrapper

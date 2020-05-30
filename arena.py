@@ -7,7 +7,7 @@ from models.combat import Combat
 if __name__ == '__main__':
     witcher = Ferret()
     foe = Drowner()
-    witcher.items.append(SteelWitcherSword1())
+    witcher.items.append(LightSilverSword3())
     combat = Combat(witcher, foe)
     while not combat.finished:
         combat.battle_round()

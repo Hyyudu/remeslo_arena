@@ -1,21 +1,20 @@
 from dataclasses import dataclass
 from typing import List, Union
 
+from content.coded import Coded
 from enums.attr import Attr
 
 
 @dataclass
-class Check:
-    attrs: List[Attr]
+class Check(Coded):
+    attr: Union[Attr, List[Attr]]
     modifier: int = 0
-    complexity: int = 1
+    difficulty: int = 1
 
-    def __init__(
-            self,
-            attrs: Union[Attr, List[Attr]],
-            modifier: int = 0,
-            complexity: int = 1,
-    ):
-        self.attrs = [attrs] if isinstance(attrs, Attr) else attrs
-        self.modifier = modifier
-        self.complexity = complexity
+    @property
+    def attrs(self):
+        return [self.attr] if isinstance(self.attr, Attr) else self.attr
+
+    def __str__(self):
+        attrs_list = "+".join([attr.value for attr in self.attrs])
+        return f'{attrs_list}({self.modifier})' + (f'[{self.difficulty}]' if self.difficulty else '')

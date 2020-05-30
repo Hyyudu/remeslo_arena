@@ -34,6 +34,7 @@ class SteelWitcherSword1(Item):
     name = 'Стальной меч ведьмака'
     listeners = [
         LsrAttackBonus(4),
+        LsrBlockBonus(1),
     ]
 
 class LightSilverSword3(Item):

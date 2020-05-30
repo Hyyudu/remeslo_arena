@@ -1,6 +1,7 @@
 from typing import List
 
 from models.check import Check
+from models.makecheck import MakeCheck
 from content import foe_skill
 from enums.areal import Areal
 from enums.attr import Attr

@@ -1,5 +1,6 @@
 import re
 from functools import partial
+from typing import List
 
 
 def camel_to_snake(name):
@@ -25,3 +26,7 @@ def bound(value, minval, maxval):
 
 
 plural_dice = partial(plural, v1='кубик', v2="кубика", v5="кубиков")
+
+def simulate_select(options: List[str]) -> str:
+    if 'block' in options:
+        return 'block'
