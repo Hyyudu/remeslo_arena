@@ -16,11 +16,13 @@ class Witcher(Coded):
         Attr.soc: 1
     }
     hits: int
+    boosts: int = 0
     toxic: int
     signs: int
     alchemy: int
     items: List[Item] = []
     skills: List[Listener] = []
+    traits: List = []
 
     @property
     def offhand_free(self):

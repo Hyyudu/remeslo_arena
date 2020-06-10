@@ -3,12 +3,14 @@ from typing import List
 from content.coded import Coded
 from content import item_functions as item_funcs
 from enums.combat_phase import CombatPhase
+from enums.item_trait import ItemTrait
 from models.listener import Listener, assign_listeners
 
 
 class Item(Coded):
     name: str
     listeners: List[Listener]
+    traits: List[ItemTrait] = []
 
     def __init__(self):
         assign_listeners(self, self.listeners)
@@ -32,13 +34,16 @@ def LsrBlockBonus(modifier):
 
 class SteelWitcherSword1(Item):
     name = 'Стальной меч ведьмака'
+    traits = [ItemTrait.sword, ItemTrait.steel]
     listeners = [
         LsrAttackBonus(4),
         LsrBlockBonus(1),
     ]
 
+
 class LightSilverSword3(Item):
     name = 'Легкий серебряный меч'
+    traits = [ItemTrait.sword, ItemTrait.silver]
     listeners = [
         LsrAttackBonus(2),
         LsrBlockBonus(1),

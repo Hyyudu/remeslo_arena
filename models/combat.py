@@ -52,7 +52,7 @@ class Combat:
 
     @property
     def finished(self):
-        return self.witcher.hits <= 0 or self.foe.hits <= 0
+        return self.witcher.hits + self.witcher.boosts <= 0 or self.foe.hits + self.foe.boosts <= 0
 
     def battle_round(self):
         self.block_count = 0

@@ -11,6 +11,29 @@ class FoeSkill(Coded):
     listeners: List[Listener]
 
 
+class Agile(FoeSkill):
+    name = 'Верткий'
+    listeners = [
+        Listener(
+            description='При Ударе 6 не дает успехов',
+            phase=CombatPhase.attack_count_successes,
+            func=fs_func.agile,
+            is_applicable=lambda success_count, attack: 6 in attack.roll
+        )
+    ]
+
+
+class Press(FoeSkill):
+    name = 'Натиск'
+    listeners = [
+        Listener(
+            description='Если противник не получил ран в фазу Атаки, 1 хит противника заменяется на буст',
+            phase=CombatPhase.attack_count_successes,
+            func=fs_func.press,
+            is_applicable=lambda success_count, attack: success_count == 0 and attack.combat.foe.hits > 0
+        )
+    ]
+
 class Slippery(FoeSkill):
     name = 'Скользкий'
     listeners = [
@@ -21,4 +44,5 @@ class Slippery(FoeSkill):
             is_applicable=lambda success_count, attack: 1 in attack.roll and success_count > 0
         )
     ]
+
 

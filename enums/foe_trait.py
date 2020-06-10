@@ -6,4 +6,4 @@ class FoeTrait(Enum):
     pack = 'стайный'
     water = 'водный'
     weak = 'слабый'
-    
+    scoffer = 'пожиратель'

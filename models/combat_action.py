@@ -8,7 +8,7 @@ class Attack(MakeCheck):
     @apply_listeners
     def collect_dice(self) -> int:
         print(f'{self.witcher.name}: Сила {self.witcher.str}')
-        return self.witcher.str
+        return self.witcher.str + self.witcher.boosts
 
     @apply_listeners
     def modify_roll(self) -> Diceroll:
@@ -20,8 +20,12 @@ class Attack(MakeCheck):
 
     @apply_listeners
     def apply_result(self):
-        self.combat.foe.hits = self.combat.foe.hits - self.success_count
-        print(f"Хиты противника: {self.combat.foe.hits}")
+        foe = self.combat.foe
+        damage_to_boosts = min(self.success_count, foe.boosts)
+        foe.boosts -= damage_to_boosts
+        self.success_count -= damage_to_boosts
+        foe.hits = foe.hits - self.success_count
+        print(f"Хиты противника: {self.combat.foe.hits}" + (f'(+{foe.boosts})' if foe.boosts else ''))
 
 
 class Block(MakeCheck):
@@ -49,8 +53,8 @@ class Retaliate(MakeCheck):
     @apply_listeners
     def collect_dice(self) -> int:
         foe = self.combat.foe
-        print(f'{foe.name}: возмездие {foe.attack}/{foe.to_hit} ({foe.damage})')
-        return foe.attack
+        print(f'{foe.name}: возмездие {foe.attack}/{foe.to_hit}+ ({foe.damage})')
+        return foe.attack + foe.boosts
 
     @apply_listeners
     def modify_roll(self) -> Diceroll:
@@ -65,4 +69,4 @@ class Retaliate(MakeCheck):
     @apply_listeners
     def apply_result(self):
         self.combat.witcher.hits -= self.success_count * self.combat.foe.damage
-        print(f"Хиты ведьмака: {self.combat.witcher.hits}")
+        print(f"{self.combat.witcher.name}: хиты/токсичность {self.combat.witcher.hits}/{self.combat.witcher.toxic}")
