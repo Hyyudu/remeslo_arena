@@ -4,8 +4,13 @@ from typing import Dict, List
 from content.foe import Foe
 from content.witcher import Witcher
 from enums.combat_phase import CombatPhase
+from enums.defence_action import DefenceAction
 from models.check import Check
-from models.combat_action import Attack
+from models.combat_action import (
+    Attack,
+    Block,
+    Retaliate,
+)
 from models.diceroll import Diceroll
 from models.listener import Listener, apply_listeners
 from utils import plural_dice, simulate_select
@@ -21,6 +26,8 @@ class Combat:
     evade_roll: Diceroll = None
     cast_roll: Diceroll = None
     retal_roll: Diceroll = None
+    block_count: int = 0
+    evade_count: int = 0
 
     def __init__(self, witcher: Witcher, foe: Foe):
         self.witcher = witcher
@@ -48,9 +55,20 @@ class Combat:
         return self.witcher.hits <= 0 or self.foe.hits <= 0
 
     def battle_round(self):
+        self.block_count = 0
+        self.evade_count = 0
         Attack(combat=self, witcher=self.witcher).process()
-        self.defend()
-        self.retaliate()
+        if self.finished:
+            return
+        print('-' * 30)
+        defence_action = self.witcher.defence_desicion()
+        if defence_action == DefenceAction.block:
+            Block(combat=self, witcher=self.witcher).process()
+        if self.finished:
+            return
+        print('-' * 30)
+        Retaliate(combat=self, witcher=self.witcher).process()
+        print("="*30)
 
         self.round_number += 1
         if self.round_number >= 10:

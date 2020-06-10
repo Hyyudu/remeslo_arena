@@ -28,7 +28,8 @@ def assign_listeners(obj, listeners: List[Listener]):
 def apply_listeners(func):
     def wrapper(obj):
         result = func(obj)
-        listeners_source: List[Listener] = obj.listeners.get(func.__name__)
+        phase = obj.__class__.__name__.lower() + '_' + func.__name__
+        listeners_source: List[Listener] = obj.combat.listeners.get(CombatPhase[phase]) or []
         for listener in listeners_source:
             if listener.is_applicable(result, obj):
                 print(listener.present)

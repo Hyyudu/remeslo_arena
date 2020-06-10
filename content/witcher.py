@@ -3,10 +3,12 @@ from typing import List,  Dict
 from content.coded import Coded
 from content.item import Item, SteelWitcherSword1
 from enums.attr import Attr
+from enums.defence_action import DefenceAction
 from models.listener import Listener
 
 
 class Witcher(Coded):
+    name: str
     attr_tables: Dict[Attr, List[int]]
     runners: Dict[Attr, int] = {
         Attr.str: 1,
@@ -42,8 +44,15 @@ class Witcher(Coded):
     @property
     def luck(self): return self.attr_tables[Attr.luck][self.runners[Attr.soc]]
 
+    def get_attr(self, attr: Attr):
+        return getattr(self, attr.name)
+
+    def defence_desicion(self) -> DefenceAction:
+        return DefenceAction.block
+
 
 class Ferret(Witcher):
+    name = 'Хорёк'
     attr_tables = {
         Attr.str: [4, 3, 2], 
         Attr.meta: [2, 3, 4], 

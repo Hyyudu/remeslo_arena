@@ -1,12 +1,11 @@
 from typing import List
 
-from models.check import Check
-from models.makecheck import MakeCheck
 from content import foe_skill
+from content.coded import Coded
 from enums.areal import Areal
 from enums.attr import Attr
-from content.coded import Coded
 from enums.foe_trait import FoeTrait
+from models.check import Check
 from models.listener import assign_listeners
 
 
@@ -49,7 +48,7 @@ class Drowner(Foe):
         foe_skill.Slippery
     ]
     hits = 5
-    attack = 2
+    attack = 3
     to_hit = 5
     damage = 1
     evade = Check(Attr.dex)

@@ -17,4 +17,5 @@ class Check(Coded):
 
     def __str__(self):
         attrs_list = "+".join([attr.value for attr in self.attrs])
-        return f'{attrs_list}({self.modifier})' + (f'[{self.difficulty}]' if self.difficulty else '')
+        modif = ("+" if self.modifier>=0 else "") + str(self.modifier)
+        return f'{attrs_list}({modif})' + (f'[{self.difficulty}]' if self.difficulty != 1 else '')

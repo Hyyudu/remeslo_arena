@@ -18,7 +18,7 @@ class Slippery(FoeSkill):
             description="В фазу Удара, если в результатах броска есть 1, отмените 1 Успех",
             phase=CombatPhase.attack_count_successes,
             func=fs_func.slippery,
-            is_applicable=lambda success_count, combat: 1 in combat.attack_roll and success_count > 0
+            is_applicable=lambda success_count, attack: 1 in attack.roll and success_count > 0
         )
     ]
 
