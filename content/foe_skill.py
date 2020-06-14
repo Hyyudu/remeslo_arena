@@ -44,5 +44,3 @@ class Slippery(FoeSkill):
             is_applicable=lambda success_count, attack: 1 in attack.roll and success_count > 0
         )
     ]
-
-

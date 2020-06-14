@@ -19,14 +19,19 @@ def plural(x: int, v1: str, v2: str, v5: str) -> str:
     return f"{x} {v5}"
 
 
+plural_dice = partial(plural, v1='кубик', v2="кубика", v5="кубиков")
+
+
 def bound(value, minval, maxval):
     value = max(minval, value)
     value = min(maxval, value)
     return value
 
 
-plural_dice = partial(plural, v1='кубик', v2="кубика", v5="кубиков")
-
 def simulate_select(options: List[str]) -> str:
     if 'block' in options:
         return 'block'
+
+
+def plus_minus(value):
+    return f'+{value}' if value >= 0 else str(value)

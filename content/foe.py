@@ -5,6 +5,7 @@ from content.coded import Coded
 from enums.areal import Areal
 from enums.attr import Attr
 from enums.foe_trait import FoeTrait
+from enums.item_trait import ItemTrait
 from models.check import Check
 from models.listener import assign_listeners
 
@@ -31,6 +32,8 @@ class Foe(Coded):
     damage: int
     evade: Check
     block: Check
+    resistance: List[ItemTrait] = []
+    immunity: List[ItemTrait] = []
 
     def __init__(self):
         for skill in self.skills:
@@ -77,4 +80,4 @@ class Ekimma(Foe):
     damage = 1
     evade = Check(Attr.dex, -1)
     block = Check([Attr.str, Attr.dex], difficulty=2)
-    # Сопротивление к стали
+    resistance = [ItemTrait.steel]

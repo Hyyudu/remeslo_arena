@@ -1,3 +1,6 @@
+from enums.combat_phase import CombatPhase
+
+
 def agile(success_count: int, attack: 'Attack'):  # Верткий
     return success_count - attack.roll.count(6)
 
@@ -11,4 +14,3 @@ def press(success_count: int, attack: 'Attack'):  # Натиск
 
 def slippery(success_count: int, attack: 'Attack'):  # Скользкий
     return max(0, success_count - 1 if 1 in attack.roll else success_count)
-

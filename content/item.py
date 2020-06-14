@@ -16,14 +16,6 @@ class Item(Coded):
         assign_listeners(self, self.listeners)
 
 
-def LsrAttackBonus(modifier):
-    return Listener(
-        description=f"Удар +{modifier}",
-        phase=CombatPhase.attack_collect_dice,
-        func=item_funcs.flat_bonus(modifier),
-    )
-
-
 def LsrBlockBonus(modifier):
     return Listener(
         description=f"Блок +{modifier}",
@@ -36,7 +28,7 @@ class SteelWitcherSword1(Item):
     name = 'Стальной меч ведьмака'
     traits = [ItemTrait.sword, ItemTrait.steel]
     listeners = [
-        LsrAttackBonus(4),
+        item_funcs.LsrAttackBonus(modifier=4, material=ItemTrait.steel),
         LsrBlockBonus(1),
     ]
 
@@ -45,7 +37,7 @@ class LightSilverSword3(Item):
     name = 'Легкий серебряный меч'
     traits = [ItemTrait.sword, ItemTrait.silver]
     listeners = [
-        LsrAttackBonus(2),
+        item_funcs.LsrAttackBonus(modifier=2, material=ItemTrait.silver),
         LsrBlockBonus(1),
         Listener(
             description='После броска Удара добавляет +1 к кубику с наименьшим значением',

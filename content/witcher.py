@@ -1,7 +1,7 @@
 from typing import List,  Dict
 
 from content.coded import Coded
-from content.item import Item, SteelWitcherSword1
+from content.item import Item
 from enums.attr import Attr
 from enums.defence_action import DefenceAction
 from models.listener import Listener
